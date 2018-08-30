@@ -22,4 +22,4 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
-vue-sample.iml
+vuejs-training.iml
