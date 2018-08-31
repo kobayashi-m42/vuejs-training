@@ -4,6 +4,7 @@
     <HeadComp></HeadComp>
     <TextareaComp></TextareaComp>
     <StringComp></StringComp>
+    <button @click="buttonAction">{{button}}</button>
   </div>
 </template>
 
@@ -20,5 +21,11 @@ import StringComp from "@/components/modules/StringComp.vue";
     StringComp
   }
 })
-export default class Form extends Vue {}
+export default class Form extends Vue {
+  button: string = "確認";
+
+  buttonAction(): void {
+    this.$store.dispatch("buttonAction");
+  }
+}
 </script>
