@@ -4,11 +4,25 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    stepCount: 0,
+    title: ["感想を入力", "確認画面", "送信完了"]
+  },
+  mutations: {
+    setStepCount: (state): void => {
+      console.log("rootsetStepCount");
+      state.stepCount++;
+    }
+  },
   actions: {
-    buttonAction(): void {
+    buttonAction: (context): void => {
       console.log("buttonAction");
+      context.commit("setStepCount");
+    }
+  },
+  getters: {
+    getTitle: (state): string => {
+      return state.title[state.stepCount];
     }
   }
 });
