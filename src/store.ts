@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import router from "@/router";
 
 Vue.use(Vuex);
 
@@ -30,6 +31,9 @@ export default new Vuex.Store({
     buttonAction: (context): void => {
       if (!context.rootState.isError) {
         context.commit("setStepCount");
+      }
+      if (context.rootState.stepCount === context.rootState.title.length - 1) {
+        router.push("thanks");
       }
     },
     inputText: (context, value): void => {

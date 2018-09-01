@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Form from "./views/Form.vue";
+import Thanks from "./components/Thanks.vue";
 
 Vue.use(Router);
 
@@ -12,6 +13,11 @@ export default new Router({
       path: "/",
       name: "form",
       component: Form
+    },
+    {
+      path: "/thanks",
+      name: "thanks",
+      component: Thanks
     },
     {
       path: "/about",
