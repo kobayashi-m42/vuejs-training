@@ -28,7 +28,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    buttonAction: (context): void => {
+    handleClick: (context): void => {
       if (!context.rootState.isError) {
         context.commit("setStepCount");
       }
@@ -36,28 +36,28 @@ export default new Vuex.Store({
         router.push("thanks");
       }
     },
-    inputText: (context, value): void => {
+    editText: (context, value): void => {
       context.commit("updateImpression", value);
     }
   },
   getters: {
-    getTitle: (state): string => {
+    title: (state): string => {
       return state.title[state.stepCount];
     },
-    getButton: (state): string => {
+    button: (state): string => {
       return state.button[state.stepCount];
     },
-    getErrorMessage: (state): string => {
+    errorMessage: (state): string => {
       if (state.isError) {
         return state.errorMessage;
       } else {
         return "";
       }
     },
-    getImpression: (state): string => {
+    impression: (state): string => {
       return state.impression;
     },
-    getComponent: (state): string => {
+    component: (state): string => {
       return state.component[state.stepCount];
     }
   }

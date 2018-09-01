@@ -11,14 +11,14 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class TextareaComp extends Vue {
   get error(): string {
-    return this.$store.getters.getErrorMessage;
+    return this.$store.getters.errorMessage;
   }
 
   get impression(): string {
-    return this.$store.getters.getImpression;
+    return this.$store.getters.impression;
   }
   set impression(value: string) {
-    this.$store.dispatch("inputText", value);
+    this.$store.dispatch("editText", value);
   }
 }
 </script>

@@ -3,7 +3,7 @@
     Formページ
     <HeadComp></HeadComp>
     <component :is="isComponent"></component>
-    <button @click="buttonAction">{{button}}</button>
+    <button @click="handleClick">{{button}}</button>
   </div>
 </template>
 
@@ -22,14 +22,14 @@ import StringComp from "@/components/modules/StringComp.vue";
 })
 export default class Form extends Vue {
   get button(): string {
-    return this.$store.getters.getButton;
+    return this.$store.getters.button;
   }
   get isComponent(): string {
-    return this.$store.getters.getComponent;
+    return this.$store.getters.component;
   }
 
-  buttonAction(): void {
-    this.$store.dispatch("buttonAction");
+  handleClick(): void {
+    this.$store.dispatch("handleClick");
   }
 }
 </script>
