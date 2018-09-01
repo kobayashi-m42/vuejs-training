@@ -22,7 +22,9 @@ import StringComp from "@/components/modules/StringComp.vue";
   }
 })
 export default class Form extends Vue {
-  button: string = "確認";
+  get button(): string {
+    return this.$store.getters.getButton;
+  }
 
   buttonAction(): void {
     this.$store.dispatch("buttonAction");
