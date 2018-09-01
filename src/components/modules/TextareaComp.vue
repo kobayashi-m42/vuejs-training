@@ -1,7 +1,7 @@
 <template>
   <div>
     <p class="error">{{ error }}</p>
-    <textarea></textarea>
+    <textarea v-model="impression"></textarea>
   </div>
 </template>
 
@@ -10,7 +10,16 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class TextareaComp extends Vue {
-  error: string = "入力は必須です";
+  get error(): string {
+    return this.$store.getters.getErrorMessage;
+  }
+
+  get impression(): string {
+    return this.$store.getters.getImpression;
+  }
+  set impression(value: string) {
+    this.$store.dispatch("inputText", value);
+  }
 }
 </script>
 
