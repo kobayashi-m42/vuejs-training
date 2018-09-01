@@ -4,11 +4,57 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    stepCount: 0,
+    title: ["感想を入力", "確認画面", "送信完了"],
+    button: ["確認", "送信"],
+    impression: "",
+    errorMessage: "入力は必須です",
+    isError: true,
+    component: ["TextareaComp", "StringComp"]
+  },
+  mutations: {
+    setStepCount: (state): void => {
+      state.stepCount++;
+    },
+    updateImpression: (state, value) => {
+      state.impression = value;
+      if (state.impression) {
+        state.isError = false;
+      } else {
+        state.isError = true;
+      }
+    }
+  },
   actions: {
-    buttonAction(): void {
-      console.log("buttonAction");
+    buttonAction: (context): void => {
+      if (!context.rootState.isError) {
+        context.commit("setStepCount");
+      }
+    },
+    inputText: (context, value): void => {
+      context.commit("updateImpression", value);
+    }
+  },
+  getters: {
+    getTitle: (state): string => {
+      return state.title[state.stepCount];
+    },
+    getButton: (state): string => {
+      return state.button[state.stepCount];
+    },
+    getErrorMessage: (state): string => {
+      if (state.isError) {
+        return state.errorMessage;
+      } else {
+        return "";
+      }
+    },
+    getImpression: (state): string => {
+      return state.impression;
+    },
+    getComponent: (state): string => {
+      return state.component[state.stepCount];
     }
   }
 });
