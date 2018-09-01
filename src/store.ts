@@ -10,7 +10,8 @@ export default new Vuex.Store({
     button: ["確認", "送信"],
     impression: "",
     errorMessage: "入力は必須です",
-    isError: true
+    isError: true,
+    component: ["TextareaComp", "StringComp"]
   },
   mutations: {
     setStepCount: (state): void => {
@@ -27,7 +28,9 @@ export default new Vuex.Store({
   },
   actions: {
     buttonAction: (context): void => {
-      context.commit("setStepCount");
+      if (!context.rootState.isError) {
+        context.commit("setStepCount");
+      }
     },
     inputText: (context, value): void => {
       context.commit("updateImpression", value);
@@ -49,6 +52,9 @@ export default new Vuex.Store({
     },
     getImpression: (state): string => {
       return state.impression;
+    },
+    getComponent: (state): string => {
+      return state.component[state.stepCount];
     }
   }
 });

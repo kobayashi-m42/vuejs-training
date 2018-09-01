@@ -2,8 +2,7 @@
   <div>
     Formページ
     <HeadComp></HeadComp>
-    <TextareaComp></TextareaComp>
-    <StringComp></StringComp>
+    <component :is="isComponent"></component>
     <button @click="buttonAction">{{button}}</button>
   </div>
 </template>
@@ -24,6 +23,9 @@ import StringComp from "@/components/modules/StringComp.vue";
 export default class Form extends Vue {
   get button(): string {
     return this.$store.getters.getButton;
+  }
+  get isComponent(): string {
+    return this.$store.getters.getComponent;
   }
 
   buttonAction(): void {
