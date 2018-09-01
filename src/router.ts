@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Form from "./views/Form.vue";
 import Thanks from "./components/Thanks.vue";
+import Todo from "./views/Todo.vue";
 
 Vue.use(Router);
 
@@ -18,6 +19,11 @@ export default new Router({
       path: "/thanks",
       name: "thanks",
       component: Thanks
+    },
+    {
+      path: "/todo",
+      name: "todo",
+      component: Todo
     },
     {
       path: "/about",
