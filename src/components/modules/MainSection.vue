@@ -7,8 +7,11 @@
   >
   <label for="toggle-all"></label>
   <ul class="todo-list">
-    <TodoItem></TodoItem>
-    <TodoItem></TodoItem>
+    <TodoItem
+      v-for="(todo, index) in todos"
+      :key="index"
+      :todo="todo"
+    ></TodoItem>
   </ul>
 </section>
   
@@ -17,11 +20,16 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import TodoItem from "./TodoItem.vue";
+import * as T from "../../types/todo";
 
 @Component({
   components: {
     TodoItem
   }
 })
-export default class MainSection extends Vue {}
+export default class MainSection extends Vue {
+  get todos(): T.ITodo[] {
+    return this.$store.state.todos;
+  }
+}
 </script>
