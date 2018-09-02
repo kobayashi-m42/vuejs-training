@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <span class="todo-count">
-      <strong>2</strong>
+      <strong>{{ remaining }}</strong>
       items left
     </span>
     <ul class="filters">
@@ -19,5 +19,9 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
-export default class AppFooter extends Vue {}
+export default class AppFooter extends Vue {
+  get remaining(): string {
+    return this.$store.getters.remaining;
+  }
+}
 </script>

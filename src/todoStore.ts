@@ -17,6 +17,9 @@ const state: ITodosState = {
 const getters: GetterTree<ITodosState, ITodosState> = {
   all(state) {
     return state.todos;
+  },
+  remaining(state) {
+    return state.todos.filter(todo => !todo.done).length;
   }
 };
 
