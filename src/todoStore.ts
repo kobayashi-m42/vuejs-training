@@ -41,11 +41,14 @@ const actions: ActionTree<ITodosState, ITodosState> = {
     };
     commit("addTodo", todo);
   },
-  toggleTodo: ({ commit }, todo: ITodo) => {
+  toggleTodo: ({ commit }, todo: ITodo): void => {
     commit("editTodo", { todo, done: !todo.done });
   },
-  removeTodo: ({ commit }, todo: ITodo) => {
+  removeTodo: ({ commit }, todo: ITodo): void => {
     commit("removeTodo", todo);
+  },
+  editTodo: ({ commit }, { todo, changedTitle }): void => {
+    commit("editTodo", { todo, title: changedTitle });
   }
 };
 
