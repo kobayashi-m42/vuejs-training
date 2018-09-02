@@ -27,6 +27,9 @@ const mutations: MutationTree<ITodosState> = {
   editTodo: (state, { todo, title = todo.title, done = todo.done }): void => {
     todo.title = title;
     todo.done = done;
+  },
+  removeTodo: (state, todo): void => {
+    state.todos.splice(state.todos.indexOf(todo), 1);
   }
 };
 
@@ -40,6 +43,9 @@ const actions: ActionTree<ITodosState, ITodosState> = {
   },
   toggleTodo: ({ commit }, todo: ITodo) => {
     commit("editTodo", { todo, done: !todo.done });
+  },
+  removeTodo: ({ commit }, todo: ITodo) => {
+    commit("removeTodo", todo);
   }
 };
 

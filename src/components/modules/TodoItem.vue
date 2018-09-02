@@ -8,7 +8,7 @@
         @change="toggleTodo(todo)"
       >
       <label v-text="todo.title"></label>
-      <button class="destroy"></button>
+      <button class="destroy" @click="removeTodo(todo)"></button>
     </div>
   </li>
 </template>
@@ -24,6 +24,10 @@ export default class TodoItem extends Vue {
 
   toggleTodo(todo: ITodo): void {
     this.$store.dispatch("toggleTodo", todo);
+  }
+
+  removeTodo(todo: ITodo): void {
+    this.$store.dispatch("removeTodo", todo);
   }
 }
 </script>
