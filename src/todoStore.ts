@@ -6,33 +6,46 @@ import Vuex, {
   ActionTree,
   Module
 } from "vuex";
-import * as T from "@/types/todo";
+import { ITodosState, ITodo } from "@/types/todo";
 
 Vue.use(Vuex);
 
-const state: T.ITodosState = {
+const state: ITodosState = {
   todos: []
 };
 
-const mutations: MutationTree<T.ITodosState> = {
-  addTodo: (state, todo: T.ITodo): void => {
-    console.log(state);
-    state.todos.push(todo);
+const getters: GetterTree<ITodosState, ITodosState> = {
+  all(state) {
+    return state.todos;
   }
 };
 
-const actions: ActionTree<T.ITodosState, T.ITodosState> = {
+const mutations: MutationTree<ITodosState> = {
+  addTodo: (state, todo: ITodo): void => {
+    state.todos.push(todo);
+  },
+  editTodo: (state, { todo, title = todo.title, done = todo.done }): void => {
+    todo.title = title;
+    todo.done = done;
+  }
+};
+
+const actions: ActionTree<ITodosState, ITodosState> = {
   addTodo: ({ commit }, todoTitle: string): void => {
-    let todo: T.ITodo = {
+    let todo: ITodo = {
       title: todoTitle,
       done: false
     };
     commit("addTodo", todo);
+  },
+  toggleTodo: ({ commit }, todo: ITodo) => {
+    commit("editTodo", { todo, done: !todo.done });
   }
 };
 
 export default new Vuex.Store({
   state,
   mutations,
-  actions
+  actions,
+  getters
 });
