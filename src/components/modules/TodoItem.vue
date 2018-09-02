@@ -1,10 +1,11 @@
 <template>
-  <li class="todo">
+  <li class="todo" :class="{ completed: todo.done }">
     <div class="view">
       <input
-         class="toggle"
-         type="checkbox"
-         :checked="todo.done"
+        class="toggle"
+        type="checkbox"
+        :checked="todo.done"
+        @change="toggleTodo(todo)"
       >
       <label v-text="todo.title"></label>
       <button class="destroy"></button>
@@ -14,11 +15,15 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import * as T from "../../types/todo";
+import { ITodo } from "../../types/todo";
 
 @Component
 export default class TodoItem extends Vue {
   @Prop()
-  private todo!: T.ITodo;
+  private todo!: ITodo;
+
+  toggleTodo(todo: ITodo): void {
+    this.$store.dispatch("toggleTodo", todo);
+  }
 }
 </script>
