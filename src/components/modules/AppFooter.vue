@@ -2,7 +2,7 @@
   <footer class="footer" v-show="allTodos.length">
     <span class="todo-count">
       <strong>{{ remaining }}</strong>
-      items left
+      {{ remaining | pluralize }} left
     </span>
     <ul class="filters" >
       <li
@@ -29,7 +29,13 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-@Component
+@Component({
+  filters: {
+    pluralize(n: number) {
+      return n === 1 ? "item" : "items";
+    }
+  }
+})
 export default class AppFooter extends Vue {
   filters = ["all", "active", "completed"];
 
