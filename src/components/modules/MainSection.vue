@@ -1,14 +1,16 @@
 <template>
-  <section class="main">
+  <section class="main" v-show="allTodos.length" >
     <input
       class="toggle-all"
       id="toggle-all"
       type="checkbox"
+      :checked="allChecked"
+      @change="toggleAll(!allChecked)"
     >
     <label for="toggle-all"></label>
     <ul class="todo-list">
       <TodoItem
-        v-for="(todo, index) in todos"
+        v-for="(todo, index) in filteredTodos"
         :key="index"
         :todo="todo"
       ></TodoItem>
@@ -27,8 +29,20 @@ import { ITodo } from "../../types/todo";
   }
 })
 export default class MainSection extends Vue {
-  get todos(): ITodo[] {
+  get filteredTodos(): ITodo[] {
     return this.$store.getters.filteredTodos;
+  }
+
+  get allTodos(): ITodo[] {
+    return this.$store.getters.all;
+  }
+
+  get allChecked() {
+    return this.allTodos.every(todo => todo.done);
+  }
+
+  toggleAll(allChecked: boolean): void {
+    this.$store.dispatch("toggleAll", allChecked);
   }
 }
 </script>
