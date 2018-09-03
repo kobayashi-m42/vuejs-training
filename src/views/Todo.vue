@@ -22,5 +22,15 @@ import AppFooter from "@/components/modules/AppFooter.vue";
     AppFooter
   }
 })
-export default class Todo extends Vue {}
+export default class Todo extends Vue {
+  mounted() {
+    window.addEventListener("hashchange", this.onHashChange);
+    this.onHashChange();
+  }
+
+  onHashChange() {
+    let visibility = window.location.hash.replace(/#\/?/, "");
+    this.$store.dispatch("changeVisibility", visibility);
+  }
+}
 </script>

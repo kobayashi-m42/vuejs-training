@@ -1,22 +1,32 @@
 import Vue from "vue";
-import Vuex, {
-  Store,
-  GetterTree,
-  MutationTree,
-  ActionTree,
-  Module
-} from "vuex";
+import Vuex, { GetterTree, MutationTree, ActionTree, Module } from "vuex";
 import { ITodosState, ITodo } from "@/types/todo";
 
 Vue.use(Vuex);
 
 const state: ITodosState = {
-  todos: []
+  todos: [],
+  visibility: "all"
 };
 
 const getters: GetterTree<ITodosState, ITodosState> = {
   all(state) {
     return state.todos;
+  },
+  active(state) {
+    return state.todos.filter(todo => !todo.done);
+  },
+  completed(state) {
+    return state.todos.filter(todo => todo.done);
+  },
+  remaining(state, getters) {
+    return getters["active"].length;
+  },
+  filteredTodos(state, getters) {
+    return getters[state.visibility];
+  },
+  visibility(state) {
+    return state.visibility;
   }
 };
 
@@ -30,6 +40,12 @@ const mutations: MutationTree<ITodosState> = {
   },
   removeTodo: (state, todo): void => {
     state.todos.splice(state.todos.indexOf(todo), 1);
+  },
+  changeVisibility: (state, visibility): void => {
+    state.visibility = visibility;
+  },
+  removeCompleted: (state): void => {
+    state.todos = state.todos.filter(todo => !todo.done);
   }
 };
 
@@ -49,6 +65,20 @@ const actions: ActionTree<ITodosState, ITodosState> = {
   },
   editTodo: ({ commit }, { todo, changedTitle }): void => {
     commit("editTodo", { todo, title: changedTitle });
+  },
+  changeVisibility: (
+    { commit },
+    visibility: ITodosState["visibility"]
+  ): void => {
+    if (getters[visibility]) {
+      commit("changeVisibility", visibility);
+    } else {
+      window.location.hash = "";
+      commit("changeVisibility", "all");
+    }
+  },
+  removeCompleted: ({ commit }): void => {
+    commit("removeCompleted");
   }
 };
 

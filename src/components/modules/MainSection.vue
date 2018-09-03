@@ -28,7 +28,7 @@ import { ITodo } from "../../types/todo";
 })
 export default class MainSection extends Vue {
   get todos(): ITodo[] {
-    return this.$store.getters.all;
+    return this.$store.getters.filteredTodos;
   }
 }
 </script>
