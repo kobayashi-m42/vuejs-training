@@ -46,6 +46,11 @@ const mutations: MutationTree<ITodosState> = {
   },
   removeCompleted: (state): void => {
     state.todos = state.todos.filter(todo => !todo.done);
+  },
+  toggleAll: (state, allChecked): void => {
+    state.todos.map(todo => {
+      todo.done = allChecked;
+    });
   }
 };
 
@@ -79,6 +84,9 @@ const actions: ActionTree<ITodosState, ITodosState> = {
   },
   removeCompleted: ({ commit }): void => {
     commit("removeCompleted");
+  },
+  toggleAll: ({ commit }, allChecked: boolean) => {
+    commit("toggleAll", allChecked);
   }
 };
 
