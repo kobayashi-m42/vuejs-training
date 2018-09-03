@@ -1,11 +1,18 @@
 import Vue from "vue";
-import Vuex, { GetterTree, MutationTree, ActionTree, Module } from "vuex";
+import Vuex, { Store, GetterTree, MutationTree, ActionTree } from "vuex";
 import { ITodosState, ITodo } from "@/types/todo";
 
 Vue.use(Vuex);
 
+const STORAGE_KEY = "todos-vuejs";
+const localStoragePlugin = (store: Store<ITodosState>) => {
+  store.subscribe((mutation, { todos }) => {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+  });
+};
+
 const state: ITodosState = {
-  todos: [],
+  todos: JSON.parse(window.localStorage.getItem(STORAGE_KEY) || "[]"),
   visibility: "all"
 };
 
@@ -94,5 +101,6 @@ export default new Vuex.Store({
   state,
   mutations,
   actions,
-  getters
+  getters,
+  plugins: [localStoragePlugin]
 });
