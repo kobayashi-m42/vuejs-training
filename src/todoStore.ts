@@ -11,15 +11,28 @@ import { ITodosState, ITodo } from "@/types/todo";
 Vue.use(Vuex);
 
 const state: ITodosState = {
-  todos: []
+  todos: [],
+  visibility: "all"
 };
 
 const getters: GetterTree<ITodosState, ITodosState> = {
   all(state) {
     return state.todos;
   },
-  remaining(state) {
-    return state.todos.filter(todo => !todo.done).length;
+  active(state) {
+    return state.todos.filter(todo => !todo.done);
+  },
+  completed(state) {
+    return state.todos.filter(todo => todo.done);
+  },
+  remaining(state, getters) {
+    return getters["active"].length;
+  },
+  filteredTodos(state, getters) {
+    return getters[state.visibility];
+  },
+  visibility(state) {
+    return state.visibility;
   }
 };
 
@@ -33,6 +46,9 @@ const mutations: MutationTree<ITodosState> = {
   },
   removeTodo: (state, todo): void => {
     state.todos.splice(state.todos.indexOf(todo), 1);
+  },
+  changeVisibility: (state, visibility): void => {
+    state.visibility = visibility;
   }
 };
 
@@ -52,6 +68,9 @@ const actions: ActionTree<ITodosState, ITodosState> = {
   },
   editTodo: ({ commit }, { todo, changedTitle }): void => {
     commit("editTodo", { todo, title: changedTitle });
+  },
+  changeVisibility: ({ commit }, visibility: string): void => {
+    commit("changeVisibility", visibility);
   }
 };
 

@@ -4,10 +4,12 @@
       <strong>{{ remaining }}</strong>
       items left
     </span>
-    <ul class="filters">
-      <li><a href="#" class="selected">All</a></li>
-      <li><a href="#">Active</a></li>
-      <li><a href="#">Completed</a></li>
+    <ul class="filters" >
+      <li
+        v-for="filter in filters"
+        :key="filter">
+        <a :href="'#/' + filter" :class="{ selected: visibility == filter }">{{ filter }}</a>
+      </li>
     </ul>
     <button class="clear-completed">
       Clear completed
@@ -20,8 +22,14 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class AppFooter extends Vue {
+  filters = ["all", "active", "completed"];
+
   get remaining(): string {
     return this.$store.getters.remaining;
+  }
+
+  get visibility(): string {
+    return this.$store.getters.visibility;
   }
 }
 </script>
