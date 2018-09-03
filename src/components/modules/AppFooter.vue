@@ -8,10 +8,19 @@
       <li
         v-for="filter in filters"
         :key="filter">
-        <a :href="'#/' + filter" :class="{ selected: visibility == filter }">{{ filter }}</a>
+        <a
+          :href="'#/' + filter"
+          :class="{ selected: visibility == filter }"
+        >
+          {{ filter }}
+        </a>
       </li>
     </ul>
-    <button class="clear-completed">
+    <button
+       class="clear-completed"
+       v-show="all.length > remaining"
+       @click="removeCompleted"
+    >
       Clear completed
     </button>
   </footer>
@@ -30,6 +39,14 @@ export default class AppFooter extends Vue {
 
   get visibility(): string {
     return this.$store.getters.visibility;
+  }
+
+  get all(): string {
+    return this.$store.getters.all;
+  }
+
+  removeCompleted(): void {
+    this.$store.dispatch("removeCompleted");
   }
 }
 </script>
