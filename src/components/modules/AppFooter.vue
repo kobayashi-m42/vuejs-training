@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer">
+  <footer class="footer" v-show="allTodos.length">
     <span class="todo-count">
       <strong>{{ remaining }}</strong>
       items left
@@ -18,7 +18,7 @@
     </ul>
     <button
        class="clear-completed"
-       v-show="all.length > remaining"
+       v-show="allTodos.length > remaining"
        @click="removeCompleted"
     >
       Clear completed
@@ -41,7 +41,7 @@ export default class AppFooter extends Vue {
     return this.$store.getters.visibility;
   }
 
-  get all(): string {
+  get allTodos(): string {
     return this.$store.getters.all;
   }
 
