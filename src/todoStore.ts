@@ -66,8 +66,16 @@ const actions: ActionTree<ITodosState, ITodosState> = {
   editTodo: ({ commit }, { todo, changedTitle }): void => {
     commit("editTodo", { todo, title: changedTitle });
   },
-  changeVisibility: ({ commit }, visibility: string): void => {
-    commit("changeVisibility", visibility);
+  changeVisibility: (
+    { commit },
+    visibility: ITodosState["visibility"]
+  ): void => {
+    if (getters[visibility]) {
+      commit("changeVisibility", visibility);
+    } else {
+      window.location.hash = "";
+      commit("changeVisibility", "all");
+    }
   },
   removeCompleted: ({ commit }): void => {
     commit("removeCompleted");
