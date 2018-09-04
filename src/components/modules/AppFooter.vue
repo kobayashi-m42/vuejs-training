@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer" v-show="allTodos.length">
+  <footer class="footer" v-show="all.length">
     <span class="todo-count">
       <strong>{{ remaining }}</strong>
       {{ remaining | pluralize }} left
@@ -18,7 +18,7 @@
     </ul>
     <button
        class="clear-completed"
-       v-show="allTodos.length > remaining"
+       v-show="all.length > remaining"
        @click="removeCompleted"
     >
       Clear completed
@@ -28,6 +28,11 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { Getter, Action, namespace } from "vuex-class";
+import { ITodosState } from "../../types/todo";
+
+const TodoGetter = namespace("TodoModule", Getter);
+const TodoAction = namespace("TodoModule", Action);
 
 @Component({
   filters: {
@@ -37,22 +42,15 @@ import { Component, Vue } from "vue-property-decorator";
   }
 })
 export default class AppFooter extends Vue {
+  @TodoGetter
+  remaining!: number;
+  @TodoGetter
+  visibility!: ITodosState["visibility"];
+  @TodoGetter
+  all!: ITodosState["todos"];
+  @TodoAction
+  removeCompleted!: () => void;
+
   filters = ["all", "active", "completed"];
-
-  get remaining(): string {
-    return this.$store.getters.remaining;
-  }
-
-  get visibility(): string {
-    return this.$store.getters.visibility;
-  }
-
-  get allTodos(): string {
-    return this.$store.getters.all;
-  }
-
-  removeCompleted(): void {
-    this.$store.dispatch("removeCompleted");
-  }
 }
 </script>
