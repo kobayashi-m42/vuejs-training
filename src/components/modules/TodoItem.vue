@@ -25,6 +25,10 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { ITodo } from "../../types/todo";
+import { Getter, Action, namespace } from "vuex-class";
+
+const TodoGetter = namespace("TodoModule", Getter);
+const TodoAction = namespace("TodoModule", Action);
 
 @Component({
   directives: {
@@ -39,23 +43,22 @@ export default class TodoItem extends Vue {
   @Prop()
   private todo!: ITodo;
 
+  @TodoAction
+  toggleTodo!: () => void;
+  @TodoAction
+  removeTodo!: (todo: ITodo) => void;
+  @TodoAction
+  editTodoAction!: (object: object) => void;
+
   editing: boolean = false;
-
-  toggleTodo(todo: ITodo): void {
-    this.$store.dispatch("toggleTodo", todo);
-  }
-
-  removeTodo(todo: ITodo): void {
-    this.$store.dispatch("removeTodo", todo);
-  }
 
   doneEdit(e: any): void {
     const changedTitle: string = e.target.value.trim();
     const todo: ITodo = this.todo;
     if (!changedTitle) {
-      this.$store.dispatch("removeTodo", todo);
+      this.removeTodo(todo);
     } else if (this.editing) {
-      this.$store.dispatch("editTodo", {
+      this.editTodoAction({
         todo,
         changedTitle
       });

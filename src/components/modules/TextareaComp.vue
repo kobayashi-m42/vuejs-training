@@ -1,24 +1,28 @@
 <template>
   <div>
-    <p class="error">{{ error }}</p>
-    <textarea v-model="impression"></textarea>
+    <p class="error">{{ errorMessage }}</p>
+    <textarea :value="impression" @input="addImpression"></textarea>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { Getter, Action, namespace } from "vuex-class";
+
+const FormGetter = namespace("FormModule", Getter);
+const FormAction = namespace("FormModule", Action);
 
 @Component
 export default class TextareaComp extends Vue {
-  get error(): string {
-    return this.$store.getters.errorMessage;
-  }
+  @FormGetter
+  errorMessage!: string;
+  @FormGetter
+  impression!: string;
+  @FormAction
+  editText!: (value: string) => void;
 
-  get impression(): string {
-    return this.$store.getters.impression;
-  }
-  set impression(value: string) {
-    this.$store.dispatch("editText", value);
+  addImpression(e: any): void {
+    this.editText(e.target.value);
   }
 }
 </script>

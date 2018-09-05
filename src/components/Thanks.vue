@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="thanks">
     Thanksページ
     <HeadComp></HeadComp>
     送信ありがとうございました！
@@ -18,5 +18,8 @@ import HeadComp from "./modules/HeadComp.vue";
 export default class Thanks extends Vue {}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+#thanks {
+  text-align: center;
+}
 </style>

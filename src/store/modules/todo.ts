@@ -1,38 +1,33 @@
 import Vue from "vue";
-import Vuex, { Store, GetterTree, MutationTree, ActionTree } from "vuex";
+import Vuex, { GetterTree, MutationTree, ActionTree, Module } from "vuex";
 import { ITodosState, ITodo } from "@/types/todo";
+import { RootState } from "@/store";
 
 Vue.use(Vuex);
 
 const STORAGE_KEY = "todos-vuejs";
-const localStoragePlugin = (store: Store<ITodosState>) => {
-  store.subscribe((mutation, { todos }) => {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
-  });
-};
-
 const state: ITodosState = {
   todos: JSON.parse(window.localStorage.getItem(STORAGE_KEY) || "[]"),
   visibility: "all"
 };
 
-const getters: GetterTree<ITodosState, ITodosState> = {
-  all(state) {
+const getters: GetterTree<ITodosState, RootState> = {
+  all: (state): ITodosState["todos"] => {
     return state.todos;
   },
-  active(state) {
+  active: (state): ITodosState["todos"] => {
     return state.todos.filter(todo => !todo.done);
   },
-  completed(state) {
+  completed: (state): ITodosState["todos"] => {
     return state.todos.filter(todo => todo.done);
   },
-  remaining(state, getters) {
+  remaining: (state, getters): number => {
     return getters["active"].length;
   },
-  filteredTodos(state, getters) {
+  filteredTodos: (state, getters): ITodosState["todos"] => {
     return getters[state.visibility];
   },
-  visibility(state) {
+  visibility: (state): ITodosState["visibility"] => {
     return state.visibility;
   }
 };
@@ -61,7 +56,7 @@ const mutations: MutationTree<ITodosState> = {
   }
 };
 
-const actions: ActionTree<ITodosState, ITodosState> = {
+const actions: ActionTree<ITodosState, RootState> = {
   addTodo: ({ commit }, todoTitle: string): void => {
     let todo: ITodo = {
       title: todoTitle,
@@ -75,7 +70,7 @@ const actions: ActionTree<ITodosState, ITodosState> = {
   removeTodo: ({ commit }, todo: ITodo): void => {
     commit("removeTodo", todo);
   },
-  editTodo: ({ commit }, { todo, changedTitle }): void => {
+  editTodoAction: ({ commit }, { todo, changedTitle }): void => {
     commit("editTodo", { todo, title: changedTitle });
   },
   changeVisibility: (
@@ -92,15 +87,15 @@ const actions: ActionTree<ITodosState, ITodosState> = {
   removeCompleted: ({ commit }): void => {
     commit("removeCompleted");
   },
-  toggleAll: ({ commit }, allChecked: boolean) => {
+  toggleAll: ({ commit }, allChecked: boolean): void => {
     commit("toggleAll", allChecked);
   }
 };
 
-export default new Vuex.Store({
+export const TodoModule: Module<ITodosState, RootState> = {
+  namespaced: true,
   state,
   mutations,
   actions,
-  getters,
-  plugins: [localStoragePlugin]
-});
+  getters
+};

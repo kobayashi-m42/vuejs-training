@@ -1,5 +1,5 @@
 <template>
-  <section class="main" v-show="allTodos.length" >
+  <section class="main" v-show="all.length" >
     <input
       class="toggle-all"
       id="toggle-all"
@@ -21,7 +21,11 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import TodoItem from "./TodoItem.vue";
-import { ITodo } from "../../types/todo";
+import { ITodosState, ITodo } from "../../types/todo";
+import { Getter, Action, namespace } from "vuex-class";
+
+const TodoGetter = namespace("TodoModule", Getter);
+const TodoAction = namespace("TodoModule", Action);
 
 @Component({
   components: {
@@ -29,20 +33,15 @@ import { ITodo } from "../../types/todo";
   }
 })
 export default class MainSection extends Vue {
-  get filteredTodos(): ITodo[] {
-    return this.$store.getters.filteredTodos;
-  }
-
-  get allTodos(): ITodo[] {
-    return this.$store.getters.all;
-  }
+  @TodoGetter
+  filteredTodos!: ITodosState["todos"];
+  @TodoGetter
+  all!: ITodosState["todos"];
+  @TodoAction
+  toggleAll!: () => void;
 
   get allChecked() {
-    return this.allTodos.every(todo => todo.done);
-  }
-
-  toggleAll(allChecked: boolean): void {
-    this.$store.dispatch("toggleAll", allChecked);
+    return this.all.every((todo: ITodo) => todo.done);
   }
 }
 </script>
