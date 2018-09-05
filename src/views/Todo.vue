@@ -1,5 +1,3 @@
-<style src="todomvc-app-css/index.css">
-</style>
 
 <template>
   <section class="todoapp">
@@ -45,3 +43,6 @@ export default class Todo extends Vue {
   }
 }
 </script>
+
+<style  src="todomvc-app-css/index.css">
+</style>

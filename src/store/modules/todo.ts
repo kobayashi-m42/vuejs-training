@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex, { GetterTree, MutationTree, ActionTree, Module } from "vuex";
 import { ITodosState, ITodo } from "@/types/todo";
+import { RootState } from "@/store";
 
 Vue.use(Vuex);
 
@@ -10,7 +11,7 @@ const state: ITodosState = {
   visibility: "all"
 };
 
-const getters: GetterTree<ITodosState, ITodosState> = {
+const getters: GetterTree<ITodosState, RootState> = {
   all: (state): ITodosState["todos"] => {
     return state.todos;
   },
@@ -55,7 +56,7 @@ const mutations: MutationTree<ITodosState> = {
   }
 };
 
-const actions: ActionTree<ITodosState, ITodosState> = {
+const actions: ActionTree<ITodosState, RootState> = {
   addTodo: ({ commit }, todoTitle: string): void => {
     let todo: ITodo = {
       title: todoTitle,
@@ -91,7 +92,7 @@ const actions: ActionTree<ITodosState, ITodosState> = {
   }
 };
 
-export const TodoModule: Module<ITodosState, ITodosState> = {
+export const TodoModule: Module<ITodosState, RootState> = {
   namespaced: true,
   state,
   mutations,

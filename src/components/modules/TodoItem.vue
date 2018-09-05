@@ -46,9 +46,9 @@ export default class TodoItem extends Vue {
   @TodoAction
   toggleTodo!: () => void;
   @TodoAction
-  removeTodo!: () => void;
+  removeTodo!: (todo: ITodo) => void;
   @TodoAction
-  editTodoAction!: () => void;
+  editTodoAction!: (object: object) => void;
 
   editing: boolean = false;
 

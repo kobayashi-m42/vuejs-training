@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div id="form">
     Formページ
     <HeadComp></HeadComp>
-    <component :is="isComponent"></component>
+    <component :is="component"></component>
     <button @click="handleClick">{{button}}</button>
   </div>
 </template>
@@ -12,6 +12,10 @@ import { Component, Vue } from "vue-property-decorator";
 import HeadComp from "@/components/modules/HeadComp.vue";
 import TextareaComp from "@/components/modules/TextareaComp.vue";
 import StringComp from "@/components/modules/StringComp.vue";
+import { Getter, Action, namespace } from "vuex-class";
+
+const FormGetter = namespace("FormModule", Getter);
+const FormAction = namespace("FormModule", Action);
 
 @Component({
   components: {
@@ -21,15 +25,17 @@ import StringComp from "@/components/modules/StringComp.vue";
   }
 })
 export default class Form extends Vue {
-  get button(): string {
-    return this.$store.getters.button;
-  }
-  get isComponent(): string {
-    return this.$store.getters.component;
-  }
-
-  handleClick(): void {
-    this.$store.dispatch("handleClick");
-  }
+  @FormGetter
+  button!: string;
+  @FormGetter
+  component!: string;
+  @FormAction
+  handleClick!: () => void;
 }
 </script>
+
+<style lang="scss" scoped>
+#form {
+  text-align: center;
+}
+</style>
