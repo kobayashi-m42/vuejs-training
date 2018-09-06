@@ -1,7 +1,7 @@
 <template>
   <div id="form">
     Formページ
-    <HeadComp></HeadComp>
+    <FormHeader></FormHeader>
     <component :is="component"></component>
     <button @click="handleClick">{{button}}</button>
   </div>
@@ -9,9 +9,9 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import HeadComp from "@/components/modules/HeadComp.vue";
-import TextareaComp from "@/components/modules/TextareaComp.vue";
-import StringComp from "@/components/modules/StringComp.vue";
+import FormHeader from "@/components/form/FormHeader.vue";
+import TextArea from "@/components/form/TextArea.vue";
+import Impression from "@/components/form/Impression.vue";
 import { Getter, Action, namespace } from "vuex-class";
 
 const FormGetter = namespace("FormModule", Getter);
@@ -19,9 +19,9 @@ const FormAction = namespace("FormModule", Action);
 
 @Component({
   components: {
-    HeadComp,
-    TextareaComp,
-    StringComp
+    FormHeader,
+    TextArea,
+    Impression
   }
 })
 export default class Form extends Vue {

@@ -1,18 +1,18 @@
 <template>
   <div id="thanks">
     Thanksページ
-    <HeadComp></HeadComp>
+    <FormHeader></FormHeader>
     送信ありがとうございました！
   </div>
 </template>
 
 <script>
 import { Component, Vue } from "vue-property-decorator";
-import HeadComp from "./modules/HeadComp.vue";
+import FormHeader from "./FormHeader.vue";
 
 @Component({
   components: {
-    HeadComp
+    FormHeader
   }
 })
 export default class Thanks extends Vue {}
