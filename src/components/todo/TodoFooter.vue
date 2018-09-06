@@ -41,7 +41,7 @@ const TodoAction = namespace("TodoModule", Action);
     }
   }
 })
-export default class AppFooter extends Vue {
+export default class TodoFooter extends Vue {
   @TodoGetter
   remaining!: number;
   @TodoGetter

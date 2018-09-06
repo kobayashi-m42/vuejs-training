@@ -32,7 +32,7 @@ const TodoAction = namespace("TodoModule", Action);
     TodoItem
   }
 })
-export default class MainSection extends Vue {
+export default class TodoList extends Vue {
   @TodoGetter
   filteredTodos!: ITodosState["todos"];
   @TodoGetter

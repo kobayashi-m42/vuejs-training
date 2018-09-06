@@ -18,7 +18,7 @@ import { Action, namespace } from "vuex-class";
 const TodoAction = namespace("TodoModule", Action);
 
 @Component
-export default class AppHeader extends Vue {
+export default class TodoHeader extends Vue {
   @TodoAction
   addTodo!: (todoTitle: string) => void;
 

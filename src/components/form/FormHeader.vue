@@ -9,7 +9,7 @@ import { Getter, namespace } from "vuex-class";
 const FormGetter = namespace("FormModule", Getter);
 
 @Component
-export default class HeadComp extends Vue {
+export default class FormHeader extends Vue {
   @FormGetter
   title!: string;
 }
