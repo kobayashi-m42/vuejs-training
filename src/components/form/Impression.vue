@@ -9,7 +9,7 @@ import { Getter, namespace } from "vuex-class";
 const FormGetter = namespace("FormModule", Getter);
 
 @Component
-export default class stringComp extends Vue {
+export default class Impression extends Vue {
   @FormGetter
   impression!: string;
 }

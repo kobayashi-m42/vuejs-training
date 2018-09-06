@@ -13,7 +13,7 @@ const FormGetter = namespace("FormModule", Getter);
 const FormAction = namespace("FormModule", Action);
 
 @Component
-export default class TextareaComp extends Vue {
+export default class TextArea extends Vue {
   @FormGetter
   errorMessage!: string;
   @FormGetter
