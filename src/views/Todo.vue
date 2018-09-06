@@ -1,17 +1,17 @@
 
 <template>
   <section class="todoapp">
-    <AppHeader></AppHeader>
-    <MainSection></MainSection>
-    <AppFooter></AppFooter>
+    <TodoHeader></TodoHeader>
+    <TodoList></TodoList>
+    <TodoFooter></TodoFooter>
   </section>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import AppHeader from "@/components/modules/AppHeader.vue";
-import MainSection from "@/components/modules/MainSection.vue";
-import AppFooter from "@/components/modules/AppFooter.vue";
+import TodoHeader from "@/components/todo/TodoHeader.vue";
+import TodoList from "@/components/todo/TodoList.vue";
+import TodoFooter from "@/components/todo/TodoFooter.vue";
 import { State, Action, namespace } from "vuex-class";
 import { ITodosState } from "@/types/todo";
 
@@ -20,9 +20,9 @@ const TodoAction = namespace("TodoModule", Action);
 
 @Component({
   components: {
-    AppHeader,
-    MainSection,
-    AppFooter
+    TodoHeader,
+    TodoList,
+    TodoFooter
   }
 })
 export default class Todo extends Vue {

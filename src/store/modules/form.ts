@@ -13,7 +13,7 @@ const state: FormState = {
   impression: "",
   errorMessage: "入力は必須です",
   isError: true,
-  component: ["TextareaComp", "StringComp"]
+  component: ["TextArea", "Impression"]
 };
 
 const getters: GetterTree<FormState, RootState> = {
